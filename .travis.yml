@@ -16,9 +16,9 @@ addons:
   coverity_scan:
     project:
       name: "bsorav/travis-ci-cpp-example"
-      description: "<Your project description here>"
+      description: "Travis CI testing"
     notification_email: bsorav@gmail.com
-    branch_pattern: master
+    branch_pattern: coverity_scan
 
 install:
 - cd ${TRAVIS_BUILD_DIR}
