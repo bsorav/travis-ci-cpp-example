@@ -3,6 +3,23 @@ language: c
 
 #sudo: false # only for faster builds
 
+env:
+  global:
+   # The next declaration is the encrypted COVERITY_SCAN_TOKEN, created
+   #   via the "travis encrypt" command using the project repo's public key
+   - secure: "UdlPZtPZgeYwXPYnc5zi+V7RVHjPG9SOhKSQo/yktx9FYtIDazXegaV0OwRKGW5b9OLd+tyj1BctxU5/CVFsXy2c/Ug8b2l1cPE+SIWiTpG6L9VNmPbz00Knn6dtBo1S86Pg0UUE+Nbm1MJJT2X0ItalZ7q7B7xXhsT1pzkF3IeCLXnk/35TaSAVA5zoWUmqNLzoVNuWfdjpMkURe8Lon2Ppz5XP2UfnI5THfkZZ0vwBd9mjLd9Uq7zRJciN3BoPvQfGhiRYFfD4VtqFOw1/Ayk1Q4H5ZX2t9LR0+z/yTJYIplA6+KsUto+DhELgg4t2NZTUo92ZI4x+7nzTJkuq5Y9svqx0wodA33uFumSXnmGVrnDZ5Hd8IRmTqMGHg1IY6A63cXDPIbZOhDhz/0OzmvORA2OC5Cjamum1Y3V5OS+rEXd7+keXVSFQNRW8vu+detULU9tT5i9OlMJ2hmeUvJiSx9flng6e2E+R308zdpRmkP2/0YJ+84MXCXPVozPAkx/H0igWiVdBi6DxVlfcf70l4aYFyZF2Q9ZXlMJJht+ejLzOq2SGUXoML7i9qW07yzEldRiXr36P7qvjOS2LXnoDL5DMEDo+HePwGCkPQdv0ornS5PrQ2DolQrMLeDXj3K/lOcGBi04UhJmsUyjGRLMsBmyVsblf5OhGVhFLHCk="
+
+before_install:
+  - echo -n | openssl s_client -connect https://scan.coverity.com:443 | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' | sudo tee -a /etc/ssl/certs/ca-
+
+addons:
+  coverity_scan:
+    project:
+      name: "bsorav/travis-ci-cpp-example"
+      description: "<Your project description here>"
+    notification_email: bsorav@gmail.com
+    branch_pattern: master
+
 install:
 - cd ${TRAVIS_BUILD_DIR}
 # install latest LCOV (1.9 was failing for me) [1]
